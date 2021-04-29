@@ -1,0 +1,33 @@
+{
+    "variables": {
+        "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
+        "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}"
+    },
+    "builders": [
+        {
+            "access_key": "{{user `aws_access_key`}}",
+            "source_ami": "ami-0affd4508a5d2481b",
+            "ami_name": "jagadesh-ami-image",
+            "instance_type": "t2.micro",
+            "region": "us-east-1",
+            "secret_key": "{{user `aws_secret_key`}}",
+            "security_group_id":"sg-0299aa5ef553358dd",
+            "ssh_keypair_name":"jagadish-testing-train",
+            "ssh_private_key_file":"jagadish-testing-train.pem",
+            "associate_public_ip_address":"true",
+            "ssh_username": "centos",
+            "type": "amazon-ebs"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline":[
+                "sudo yum update -y",
+                "sudo yum install -y wget git",
+                "sudo yum install -y java-11-openjdk.x86_64 java-11-openjdk-demo.x86_64 java-11-openjdk-devel.x86_64 java-11-openjdk-headless.x86_64",
+                "java -version"
+            ]
+        }
+    ]
+}
